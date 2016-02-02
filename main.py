@@ -139,7 +139,15 @@ def moyenne_egal(val):
 
 
 binarize(train_set[0])
+<<<<<<< HEAD
 binarize(test_set[0][:1000])
+=======
+<<<<<<< HEAD
+binarize(test_set[0][:1000])
+=======
+binarize(test_set[0][1000])
+>>>>>>> ce05b77d908a44408762afa6b793a763d196e876
+>>>>>>> ec586a5fe7a82978656bf48dddc279dae996baaf
 #moyenne_egal(4)
 
 # espace euclident => distance entre points
@@ -206,7 +214,15 @@ def prediction_globale(nombre):
    plt.savefig('full_train.png')
    plt.show()
 
+<<<<<<< HEAD
 prediction_globale(150)
+=======
+<<<<<<< HEAD
+prediction_globale(150)
+=======
+prediction_globale(1000)
+>>>>>>> ce05b77d908a44408762afa6b793a763d196e876
+>>>>>>> ec586a5fe7a82978656bf48dddc279dae996baaf
 
 
 #----------------------------------------------------------------
