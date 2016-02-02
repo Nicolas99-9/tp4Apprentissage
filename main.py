@@ -15,6 +15,12 @@ def show_image(i,j):
     plt.show()
 
 
+def show_image2(tab):
+    im = np.array(tab).reshape(28,28)
+    plt.imshow(im,plt.cm.gray)
+    plt.show()
+
+
 #show_image(0,0)
 pprint(train_set[0][0])
 # train set => matrice contenant les images et deuxieme elemeent est l etiquette associee
@@ -74,7 +80,7 @@ def histo_horizontal(image):
     return tab
 
 
-print("histogramme horizontale: ",histo_horizontal(train_set[0][0]))
+#print("histogramme horizontale: ",histo_horizontal(train_set[0][0]))
 
 def histo_vertical(image):
     tab = [0 for i in range(0,28)]
@@ -82,7 +88,7 @@ def histo_vertical(image):
         if(image[i]==1):
           tab[i%28] +=1
     return tab
-print("histogramme verticale: ",histo_vertical(train_set[0][0]))
+#print("histogramme verticale: ",histo_vertical(train_set[0][0]))
 
 def display_histo_hor(tableau):
     plt.plot([i for i in range(0,len(tableau))],tableau)
@@ -104,5 +110,29 @@ def display_histo_ver(tableau):
 # 5 : train_set[1][0]
 
 
+def moyennes(liste_image):
+    #mon_tab = [[0 for i in range(0,28)] for  j in range(0,28)]
+    mon_tab = [0 for  j in range(0,784)]
+    for image in liste_image:
+        for i in range(len(image)):
+            mon_tab[i] += image[i]
+    taille = float(len(liste_image))
+    for i in range(len(mon_tab)):
+        mon_tab[i] = mon_tab[i]/taille
+    return mon_tab
 
 
+#moyenne sur des chiffres differents
+#ma_moyenne  = moyennes(train_set[0][:5])
+#show_image2(ma_moyenne)
+
+
+def moyenne_egal(val):
+    liste_appel = []
+    for vale in range(len(train_set[1])):
+        if(train_set[1][vale]==val):
+            liste_appel.append(train_set[0][vale])
+    ma_moyenne  = moyennes(liste_appel)
+    show_image2(ma_moyenne)
+
+moyenne_egal(4)
