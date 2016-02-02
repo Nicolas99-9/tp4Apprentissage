@@ -3,6 +3,8 @@ import gzip
 import pickle
 import matplotlib.pyplot as plt
 from pprint import pprint
+import operator
+from itertools import islice
 
 with gzip.open('mnist.pkl.gz','rb','latin-1') as ifile:
     train_set,valid_set,test_set = pickle.load(ifile)
@@ -22,7 +24,7 @@ def show_image2(tab):
 
 
 #show_image(0,0)
-pprint(train_set[0][0])
+#pprint(train_set[0][0])
 # train set => matrice contenant les images et deuxieme elemeent est l etiquette associee
 #print(valid_set)
 
@@ -135,4 +137,57 @@ def moyenne_egal(val):
     ma_moyenne  = moyennes(liste_appel)
     show_image2(ma_moyenne)
 
-moyenne_egal(4)
+#moyenne_egal(4)
+
+# espace euclident => distance entre points
+# plus des points sont proches plus ils sont similaires
+# attribuer l etiquette de l exemple le plus proche 
+# pour etre plus robuste faire moyenne des etiquettes des k voisins les plus proches
+# complexites : N * d (nombre exemples * nombre de dimensions) pour classifier un point
+
+
+#DIstance minimale
+# determiner un representant de chaque classe en utilisant une moyenne
+#attribuer une etiquette de la classe dont representant est plus proche
+
+def sortes(ma_list):
+    result = sorted(ma_list.items(), key=operator.itemgetter(1),reverse= True)
+    return result
+
+def distance(a,b):
+    return np.linalg.norm(a-b)
+
+
+def take(n, iterable):
+    "Return first n items of the iterable as a list"
+    return list(islice(iterable, n))
+
+
+
+def get_k_nearest_voisins(k,liste,x):
+    lis = {}
+    for i in range(len(liste)):
+        lis[i] = distance(x,liste[i])
+    return (sortes(lis)[:k])
+
+
+def prediction_k(image_to_predict,k,train_datas,labels):
+    voisons_proche = get_k_nearest_voisins(k,train_datas,image_to_predict)
+    compte= [0 for i in range(0,10)]
+    for e,v in voisons_proche:
+        compte[labels[e]]+=1
+    print(compte)
+    return (sorted(compte,reverse=True)[0])
+    
+
+get_k_nearest_voisins(3,[0,2,3,5,8,2],2)
+
+
+
+
+
+
+
+
+
+
