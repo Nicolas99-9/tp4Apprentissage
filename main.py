@@ -49,7 +49,7 @@ def binarize_short(tableau):
                 tableau[e] =0
 
 
-binarize_short(train_set[0][0])
+#binarize_short(train_set[0][0])
 
 
 def save_tagger(filename,tag):
@@ -139,7 +139,7 @@ def moyenne_egal(val):
 
 
 binarize(train_set[0])
-binarize(test_set[0][1000])
+binarize(test_set[0][:1000])
 #moyenne_egal(4)
 
 # espace euclident => distance entre points
@@ -206,7 +206,7 @@ def prediction_globale(nombre):
    plt.savefig('full_train.png')
    plt.show()
 
-prediction_globale(1000)
+prediction_globale(150)
 
 
 #----------------------------------------------------------------
