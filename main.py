@@ -138,16 +138,8 @@ def moyenne_egal(val):
     show_image2(ma_moyenne)
 
 
-binarize(train_set[0])
-<<<<<<< HEAD
-binarize(test_set[0][:1000])
-=======
-<<<<<<< HEAD
-binarize(test_set[0][:1000])
-=======
-binarize(test_set[0][1000])
->>>>>>> ce05b77d908a44408762afa6b793a763d196e876
->>>>>>> ec586a5fe7a82978656bf48dddc279dae996baaf
+binarize(train_set[0][:2000])
+binarize(test_set[0][:100])
 #moyenne_egal(4)
 
 # espace euclident => distance entre points
@@ -198,31 +190,72 @@ def prediction(ids,k):
 def prediction_globale(nombre):
    x = [i for i in range(1,11)]
    y = [0 for i in range(1,11)]
+   confusion = [[0 for i in range(0,10)] for i in range(0,10)]
    for k in x:
        print(" k :" , k)
        for ids in range(nombre):
-           vals = prediction_k(test_set[0][ids],k, train_set[0],train_set[1])
+           vals = prediction_k(test_set[0][ids],k, train_set[0][:1000],train_set[1][:1000])
            #print(test_set[1][ids] , "valeur predite :" , vals)
            if(test_set[1][ids] != vals):
                y[k-1] +=1
+               confusion[test_set[1][ids]][vals] +=1
                #print("erreur : id : ", ids,  " k :" , k ," predite :", vals, " reele :",test_set[1][ids])  
    for i in range(len(y)):
        y[i]  = (y[i] /float(nombre))*100.0
    plt.plot(x,y)
    plt.xlabel('K nearest neightbours')
    plt.ylabel('Error rate (%)')
-   plt.savefig('full_train.png')
+   plt.savefig('full_train11.png')
    plt.show()
+   return confusion
 
-<<<<<<< HEAD
-prediction_globale(150)
-=======
-<<<<<<< HEAD
-prediction_globale(150)
-=======
-prediction_globale(1000)
->>>>>>> ce05b77d908a44408762afa6b793a763d196e876
->>>>>>> ec586a5fe7a82978656bf48dddc279dae996baaf
+
+#confu = prediction_globale(150)
+#print(confu)
+# confusion matrice for 1000 train data and 150 tests
+'''
+[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+[3, 28, 0, 3, 1, 0, 0, 17, 0, 0], 
+[0, 8, 7, 0, 0, 1, 0, 0, 0, 10], 
+[0, 0, 0, 0, 0, 0, 0, 4, 0, 29], 
+[0, 10, 0, 9, 9, 0, 0, 0, 0, 0], 
+[18, 19, 0, 0, 3, 0, 0, 0, 0, 0], 
+[0, 18, 0, 0, 0, 0, 0, 0, 0, 2],
+ [0, 0, 5, 0, 0, 0, 0, 0, 0, 4], 
+[0, 1, 0, 0, 17, 0, 0, 14, 0, 0]]
+'''
+
+def test_performance(nombres):
+   x = [i for i in range(1,11)]
+   '''
+   mmm = []
+   for liste in train_set[0][:2000]:
+       #mmm.append(histo_horizontal(liste))
+       mmm.append(histo_vertical(liste))'''
+   erreurs = 0.0
+   nombre = 0.0
+   for ids in range(nombres):
+       #vals = prediction_k(np.array(histo_vertical(test_set[0][ids])),6, np.array(mmm),train_set[1][:2000])
+       #vals = prediction_k(np.array(histo_horizontal(test_set[0][ids])),6, np.array(mmm),train_set[1][:2000])
+       vals = prediction_k(test_set[0][ids],6, train_set[0][:2000],train_set[1][:2000])
+       if(test_set[1][ids] != vals):
+           erreurs+=1
+       nombre+=1.0
+   print("TAUX D erreur pour k = 6 " , (erreurs/float(nombre)))
+
+test_performance(100)
+
+#resultats pour 2000 donnees d entrainement et 100 tests
+
+#donnes non binarisee : 0.1
+#donnes binarissee : 0.12
+# histogramme verticaux :   0.54
+#histo        horizontaux : 0.27
+
+
+
+
 
 
 #----------------------------------------------------------------
